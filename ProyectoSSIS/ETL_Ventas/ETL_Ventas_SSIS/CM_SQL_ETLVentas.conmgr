@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="CM_SQL_ETLVentas"
+  DTS:DTSID="{60FB9490-BBB0-4FD3-8714-607CB9383DC9}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=ETLVentasDB;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-ETL_Ventas_SSIS-{60FB9490-BBB0-4FD3-8714-607CB9383DC9}localhost.ETLVentasDB;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
