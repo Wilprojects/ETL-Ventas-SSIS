@@ -12,8 +12,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="PKG_CargaVentas"
   DTS:PackageType="5"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{4654C264-573C-4F3B-BCAE-12FF2EE67C92}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{6F3D485A-1A27-45D7-A583-E41BFE3CA339}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -21,7 +21,7 @@
     <DTS:Executable
       DTS:refId="Package\DFT_ProcesarVentas"
       DTS:CreationName="Microsoft.Pipeline"
-      DTS:Description="Lee los registros de ventas desde el archivo CSV diario."
+      DTS:Description="Convierte los campos de texto provenientes del CSV a los tipos de datos requeridos por el proceso ETL."
       DTS:DTSID="{A949E503-6ECD-4D0E-84BA-F0DC3DDAB87C}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -32,6 +32,220 @@
         <pipeline
           version="1">
           <components>
+            <component
+              refId="Package\DFT_ProcesarVentas\CNV_TiposDatos"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Conversión de datos;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Conversión de datos"
+              name="CNV_TiposDatos"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]"
+                  name="Entrada de conversión de datos">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[IdVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[IdCliente]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdCliente"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdCliente]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[Producto]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Producto"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Producto]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[Cantidad]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cantidad"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Cantidad]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[PrecioUnitario]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrecioUnitario"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos]"
+                  exclusionGroup="1"
+                  name="Salida de conversión de datos"
+                  synchronousInputId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdVenta_Cnv]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdVenta_Cnv]"
+                      name="IdVenta_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
+                      name="FechaVenta_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdCliente_Cnv]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdCliente_Cnv]"
+                      name="IdCliente_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdCliente]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Producto_Cnv]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      length="150"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Producto_Cnv]"
+                      name="Producto_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Producto]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]"
+                      name="Cantidad_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Cantidad]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]"
+                      name="PrecioUnitario_Cnv"
+                      precision="18"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de conversión de datos"
+                  synchronousInputId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
             <component
               refId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas"
               componentClassID="Microsoft.FlatFileSource"
@@ -294,6 +508,13 @@
               </outputs>
             </component>
           </components>
+          <paths>
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
+              endId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]"
+              name="Salida de origen de archivo plano"
+              startId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano]" />
+          </paths>
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
@@ -374,11 +595,37 @@
     design-time-name="Package\DFT_ProcesarVentas">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="165.6,41.6"
           Id="Package\DFT_ProcesarVentas\SRC_CSV_Ventas"
           TopLeft="291.666650730703,89.2666660459174" />
+        <NodeLayout
+          Size="173.6,41.6"
+          Id="Package\DFT_ProcesarVentas\CNV_TiposDatos"
+          TopLeft="293.333317306307,187.199998698235" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
+          TopLeft="377.299984018505,130.866666045917">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56.3333326523172"
+              Start="0,0"
+              End="0,48.8333326523172">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.8333326523172" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
