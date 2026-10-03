@@ -4,6 +4,8 @@
   DTS:DTSID="{C7BEF1A4-6E34-4EEE-B792-20351EB7E9B2}"
   DTS:Description="Archivo CSV diario de ventas utilizado como origen del proceso ETL"
   DTS:CreationName="FLATFILE">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">@[$Project::pRutaEntrada]</DTS:PropertyExpression>
   <DTS:ObjectData>
     <DTS:ConnectionManager
       DTS:Format="Delimited"

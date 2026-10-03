@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">WEMZ</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVcZOhkeoJ0WF0xwYVaXTkQAAAAACAAAAAAAQZgAAAAEAACAAAACGIgL43dtKeHVHxRvznMJPxKh1p4vQrXKOcawdkedqNwAAAAAOgAAAAAIAACAAAAAGNj7zKOuBpuBsHm8QOHm2Ox61H+kHwUFr8Pwa1UF/L5AAAACgiA4BX4CpOEahJhB2eEc2a5GtcZ5yePMGvwm57sl/cc6yVwEbeWgtc+3Wm27R1kp7Ol8NLCQYTXmBBmJxDetK7N8h6TE9lA2zkIcmS9A2v/fbxNf4czyrqn6UPn/0yJnD1xm0uy2v3GjIIiiAih0aazSkdzvb2Kz0orC2Vcf2uplyJYgqR3EkjQlYQCP+2pRAAAAAez9AwZWARGYjir85z/9Q2pzcalO7pAdK5pIQhFIpTqft3jneX2FZGj9n4OrOjIuCHlLJKaDR9hatsms6d2f8Ug==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVcZOhkeoJ0WF0xwYVaXTkQAAAAACAAAAAAAQZgAAAAEAACAAAADNrQJlxaFeEkQu83vl6EasxVEG/orpaZYqxKR2hgqlhgAAAAAOgAAAAAIAACAAAABKdij+x5U5wiDOD3Qud6CD/sDcgNs11BGPu0qBS7i42ZAAAACPkCVjdCn13ZxdGDxHMEBpe3zB2HT6em2xvuogfKEWU+fPyOQn5DGVRb6D4mnpGUTvtAxxE2TIVPQsKltjHDqJxLoFJi/+6B/15HVw6F1nEcuLmD8c70AW9UDt0bKgwh+0zKFgBA/rYCFQfa4k8460HW9eruHFYsB49/m/tUPYic2Y1VzXs7JDzPdb0v80FWVAAAAAexK7m0YfUFSADG95OWAQ5UYr7ASQSy8zDEq6WTIIvaFgQLj8SQzTdyLiIj2MBxgiUOmuDpQS1lJfcaZAVhtTJw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -246,21 +246,6 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.CM_CSV_VentasEntrada.ConnectionString">
-              <SSIS:Properties>
-                <SSIS:Property SSIS:Name="ID">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="CreationName">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="Description">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">D:\CURSOS\NTTDATA\07.ETL con SSIS\ETL_Ventas\Entrada\Ventas_Diarias.csv</SSIS:Property>
-                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-              </SSIS:Properties>
-            </SSIS:Parameter>
             <SSIS:Parameter SSIS:Name="CM.CM_CSV_VentasEntrada.DataRowsToSkip">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
@@ -348,6 +333,8 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">
+                </SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
@@ -389,13 +376,12 @@
                 <SSIS:Property SSIS:Name="Name">PKG_CargaVentas</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">7</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{1F2D5290-8DD9-44BB-BD7A-7434B3D8240D}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{069266C6-9BF4-45D1-A84D-817A98A4EC70}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
-                <SSIS:Property SSIS:Name="Description">
-                </SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">Valida que la base de datos y las tablas necesarias para el proceso ETL estén disponibles</SSIS:Property>
                 <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters />
@@ -423,7 +409,13 @@
         <LinkedAzureSSISIR />
         <LinkedAzureStorage />
         <RemoteExecutionFolder />
-        <ParameterConfigurationValues />
+        <ParameterConfigurationValues>
+          <ConfigurationSetting>
+            <Id>LastModifiedTime</Id>
+            <Name>LastModifiedTime</Name>
+            <Value xsi:type="xsd:dateTime">2026-10-03T20:02:15.5130549Z</Value>
+          </ConfigurationSetting>
+        </ParameterConfigurationValues>
       </Options>
     </Configuration>
   </Configurations>
