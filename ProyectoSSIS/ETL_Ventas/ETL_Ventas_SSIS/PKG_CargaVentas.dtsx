@@ -12,8 +12,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="PKG_CargaVentas"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{6F3D485A-1A27-45D7-A583-E41BFE3CA339}">
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{B36C1BFB-75BD-41D2-B518-BAA929ED6FB8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -21,7 +21,7 @@
     <DTS:Executable
       DTS:refId="Package\DFT_ProcesarVentas"
       DTS:CreationName="Microsoft.Pipeline"
-      DTS:Description="Convierte los campos de texto provenientes del CSV a los tipos de datos requeridos por el proceso ETL."
+      DTS:Description="Calcula el importe total de la venta multiplicando&#xA;Cantidad por PrecioUnitario."
       DTS:DTSID="{A949E503-6ECD-4D0E-84BA-F0DC3DDAB87C}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -239,6 +239,94 @@
                       refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Crea nuevos valores de columna aplicando expresiones a las columnas de entrada de la transformación. Crea nuevas columnas o sobrescribe las columnas existentes. Por ejemplo, se concatenan los valores de las columnas 'nombre' y 'apellidos' para crear una columna 'nombre completo'."
+              name="DRV_CalcularImporteTotal"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]"
+                  description="Entrada en la transformación Columna derivada"
+                  name="Entrada de columna derivada">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada].Columns[Cantidad_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="Cantidad_Cnv"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada].Columns[PrecioUnitario_Cnv]"
+                      cachedDataType="numeric"
+                      cachedName="PrecioUnitario_Cnv"
+                      cachedPrecision="18"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada]"
+                  description="Salida predeterminada de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  name="Salida de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada].Columns[ImporteTotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Cálculo"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada].Columns[ImporteTotal]"
+                      name="ImporteTotal"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión de columna derivada"
+                          name="Expression">(DT_NUMERIC,18,2)(#{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]} * #{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión descriptiva de columna derivada"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_NUMERIC,18,2)(Cantidad_Cnv * PrecioUnitario_Cnv)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de error de columna derivada]"
+                  description="Salida de error de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -510,6 +598,11 @@
           </components>
           <paths>
             <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
+              endId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]"
+              name="Salida de conversión de datos"
+              startId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos]" />
+            <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
               endId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]"
               name="Salida de origen de archivo plano"
@@ -595,7 +688,7 @@
     design-time-name="Package\DFT_ProcesarVentas">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="165.6,41.6"
           Id="Package\DFT_ProcesarVentas\SRC_CSV_Ventas"
@@ -618,6 +711,32 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,48.8333326523172" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal"
+          TopLeft="301.666650184328,282.533331368632" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
+          TopLeft="381.499983745317,228.799998698235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.7333326703973"
+              Start="0,0"
+              End="0,46.2333326703973">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.2333326703973" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
