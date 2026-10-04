@@ -12,8 +12,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="PKG_CargaVentas"
   DTS:PackageType="5"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{B36C1BFB-75BD-41D2-B518-BAA929ED6FB8}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{E64FEAD4-62FB-42E3-A93B-D2C15D0BF1E0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -21,7 +21,7 @@
     <DTS:Executable
       DTS:refId="Package\DFT_ProcesarVentas"
       DTS:CreationName="Microsoft.Pipeline"
-      DTS:Description="Calcula el importe total de la venta multiplicando&#xA;Cantidad por PrecioUnitario."
+      DTS:Description="Separa las ventas válidas de las no válidas según&#xA;cantidad, precio unitario y estado."
       DTS:DTSID="{A949E503-6ECD-4D0E-84BA-F0DC3DDAB87C}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -239,6 +239,108 @@
                       refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\CS_ValidarVenta"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="División condicional;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Enruta filas de datos a diferentes salidas según el contenido de los datos. Se usan condiciones (expresiones de SSIS) para especificar las filas que se van a enrutar. Por ejemplo, se usa para separar los registros que deben limpiarse de los registros listos para ser cargados o para enrutar solamente un subconjunto de registros."
+              name="CS_ValidarVenta"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional]"
+                  description="Entrada en la transformación División condicional"
+                  name="Entrada de división condicional">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional].Columns[Cantidad_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="Cantidad_Cnv"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional].Columns[PrecioUnitario_Cnv]"
+                      cachedDataType="numeric"
+                      cachedName="PrecioUnitario_Cnv"
+                      cachedPrecision="18"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[VentaValida]"
+                  description="Salida 1 de la transformación División condicional"
+                  errorOrTruncationOperation="Cálculo"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="VentaValida"
+                  synchronousInputId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la expresión. Esta versión de expresión usa identificadores de linaje en lugar de nombres de columna."
+                      name="Expression">#{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]} &gt; 0 &amp;&amp; #{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]} &gt; 0 &amp;&amp; (DT_WSTR,20)#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]} == "APROBADA"</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la versión descriptiva de la expresión. Esta versión de expresión usa nombres de columna."
+                      expressionType="Notify"
+                      name="FriendlyExpression">Cantidad_Cnv &gt; 0 &amp;&amp; PrecioUnitario_Cnv &gt; 0 &amp;&amp; (DT_WSTR,20)Estado == "APROBADA"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica la posición de la condición en la lista de condiciones que evalúa la transformación. El orden de evaluación es del menor al mayor valor."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[VentaNoValida]"
+                  description="Salida predeterminada de la transformación División condicional"
+                  exclusionGroup="1"
+                  name="VentaNoValida"
+                  synchronousInputId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[Salida de error de división condicional]"
+                  description="Salida de error de la transformación División condicional"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de división condicional"
+                  synchronousInputId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -598,6 +700,11 @@
           </components>
           <paths>
             <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada]"
+              endId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Inputs[Entrada de división condicional]"
+              name="Salida de columna derivada"
+              startId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada]" />
+            <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
               endId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]"
               name="Salida de conversión de datos"
@@ -737,6 +844,32 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,46.2333326703973" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="169.6,41.6"
+          Id="Package\DFT_ProcesarVentas\CS_ValidarVenta"
+          TopLeft="299.999983608723,373.666664346391" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada]"
+          TopLeft="383.833316896525,324.133331368632">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.5333329777586"
+              Start="0,0"
+              End="0,42.0333329777586">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.0333329777586" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
