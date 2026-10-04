@@ -9,7 +9,7 @@
   <DTS:ObjectData>
     <DTS:ConnectionManager
       DTS:Format="Delimited"
-      DTS:LocaleID="10250"
+      DTS:LocaleID="1033"
       DTS:HeaderRowDelimiter="_x000D__x000A_"
       DTS:ColumnNamesInFirstDataRow="True"
       DTS:RowDelimiter=""

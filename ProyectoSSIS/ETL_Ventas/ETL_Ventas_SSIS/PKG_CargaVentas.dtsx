@@ -12,19 +12,116 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="PKG_CargaVentas"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{84B0B1A3-8769-4F35-AECB-63484730F0EA}">
+  DTS:VersionBuild="45"
+  DTS:VersionGUID="{E876F34F-29CA-4AB2-B1BC-2F5AB9EC195A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_CSV_VentasRechazadas]"
+      DTS:CreationName="FLATFILE"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{687A161A-A327-44AB-A1B5-8D0083E93774}"
+      DTS:ObjectName="CM_CSV_VentasRechazadas">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::pRutaRechazados]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="10250"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="D:\CURSOS\NTTDATA\07.ETL con SSIS\ETL_Ventas\Rechazados\Ventas_Rechazadas.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="20"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="IdVenta"
+              DTS:DTSID="{3B699B17-9AF8-4420-ACF5-BC42E28718C3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="30"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="FechaVenta"
+              DTS:DTSID="{2771B68E-A1C9-4DB3-8899-AA6E17FD57C4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="20"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="IdCliente"
+              DTS:DTSID="{C934CFE8-EC32-418A-A6FE-379083BC298C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="150"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Producto"
+              DTS:DTSID="{A38977F4-EFC6-428B-943B-83DA7AB92389}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="20"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Cantidad"
+              DTS:DTSID="{C7731C83-8B58-42C1-8FC8-8FD067FC83D3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PrecioUnitario"
+              DTS:DTSID="{FAA89462-6017-4E13-93E8-BA12D5C44F98}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="20"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Estado"
+              DTS:DTSID="{BDEB5406-9D63-48B1-B105-28E0B7D081C4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MotivoRechazo"
+              DTS:DTSID="{6FB508BB-B6B4-48F0-A980-0F1D43904246}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
       DTS:refId="Package\DFT_ProcesarVentas"
       DTS:CreationName="Microsoft.Pipeline"
-      DTS:Description="Separa las ventas válidas de las no válidas según&#xA;cantidad, precio unitario y estado."
+      DTS:Description="Identifica el motivo por el cual una venta&#xA;no cumple las reglas de negocio."
       DTS:DTSID="{A949E503-6ECD-4D0E-84BA-F0DC3DDAB87C}"
       DTS:ExecutableType="Microsoft.Pipeline"
-      DTS:LocaleID="-1"
+      DTS:LocaleID="1033"
       DTS:ObjectName="DFT_ProcesarVentas"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
@@ -51,13 +148,6 @@
                       cachedLength="20"
                       cachedName="IdVenta"
                       lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]" />
-                    <inputColumn
-                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[FechaVenta]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="30"
-                      cachedName="FechaVenta"
-                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]" />
                     <inputColumn
                       refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[IdCliente]"
                       cachedCodepage="65001"
@@ -86,6 +176,13 @@
                       cachedLength="50"
                       cachedName="PrecioUnitario"
                       lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -111,26 +208,6 @@
                           dataType="System.Int32"
                           description="Especifica la columna de entrada usada como origen de datos para la conversión."
                           name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]}</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
-                          name="FastParse">false</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
-                      dataType="dbDate"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="RedirectRow"
-                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
-                      name="FechaVenta_Cnv"
-                      truncationRowDisposition="RedirectRow">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
-                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
@@ -206,6 +283,7 @@
                       lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]"
                       name="PrecioUnitario_Cnv"
                       precision="18"
+                      scale="2"
                       truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
@@ -213,6 +291,26 @@
                           dataType="System.Int32"
                           description="Especifica la columna de entrada usada como origen de datos para la conversión."
                           name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]"
+                      name="FechaVenta_Cnv"
+                      truncationRowDisposition="RedirectRow">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica la columna de entrada usada como origen de datos para la conversión."
+                          name="SourceInputColumnLineageID">#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indica si la columna usa las rutinas de análisis más rápidas independientes de la configuración regional."
@@ -276,6 +374,7 @@
                       cachedDataType="numeric"
                       cachedName="PrecioUnitario_Cnv"
                       cachedPrecision="18"
+                      cachedScale="2"
                       lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
                   </inputColumns>
                   <externalMetadataColumns />
@@ -371,6 +470,7 @@
                       cachedDataType="numeric"
                       cachedName="PrecioUnitario_Cnv"
                       cachedPrecision="18"
+                      cachedScale="2"
                       lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
                   </inputColumns>
                   <externalMetadataColumns />
@@ -435,6 +535,400 @@
                   <externalMetadataColumns />
                 </output>
               </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Identifica las ventas cuyo IdCliente&#xA;no existe en dbo.Cliente."
+              name="DRV_RechazoCliente"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Inputs[Entrada de columna derivada]"
+                  description="Entrada en la transformación Columna derivada"
+                  name="Entrada de columna derivada">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de columna derivada]"
+                  description="Salida predeterminada de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  name="Salida de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Cálculo"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      name="MotivoRechazo"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión de columna derivada"
+                          name="Expression">(DT_STR,100,65001)"CLIENTE_NO_EXISTE"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión descriptiva de columna derivada"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,100,65001)"CLIENTE_NO_EXISTE"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de error de columna derivada]"
+                  description="Salida de error de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Agrega el motivo de rechazo a los registros&#xA;que presentan errores de conversión de datos."
+              name="DRV_RechazoConversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Inputs[Entrada de columna derivada]"
+                  description="Entrada en la transformación Columna derivada"
+                  name="Entrada de columna derivada">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de columna derivada]"
+                  description="Salida predeterminada de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  name="Salida de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Cálculo"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      name="MotivoRechazo"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión de columna derivada"
+                          name="Expression">(DT_STR,100,65001)"ERROR_CONVERSION_DATOS"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión descriptiva de columna derivada"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,100,65001)"ERROR_CONVERSION_DATOS"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de error de columna derivada]"
+                  description="Salida de error de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Crea nuevos valores de columna aplicando expresiones a las columnas de entrada de la transformación. Crea nuevas columnas o sobrescribe las columnas existentes. Por ejemplo, se concatenan los valores de las columnas 'nombre' y 'apellidos' para crear una columna 'nombre completo'."
+              name="DRV_RechazoReglas"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada]"
+                  description="Entrada en la transformación Columna derivada"
+                  name="Entrada de columna derivada">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada].Columns[Cantidad_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="Cantidad_Cnv"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada].Columns[PrecioUnitario_Cnv]"
+                      cachedDataType="numeric"
+                      cachedName="PrecioUnitario_Cnv"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada]"
+                  description="Salida predeterminada de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  name="Salida de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Cálculo"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada].Columns[MotivoRechazo]"
+                      name="MotivoRechazo"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión de columna derivada"
+                          name="Expression">(DT_STR,100,65001)(#{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]} &lt;= 0 ? "CANTIDAD_INVALIDA" : #{Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]} &lt;= 0 ? "PRECIO_INVALIDO" : "ESTADO_NO_APROBADO")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión descriptiva de columna derivada"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,100,65001)(Cantidad_Cnv &lt;= 0 ? "CANTIDAD_INVALIDA" : PrecioUnitario_Cnv &lt;= 0 ? "PRECIO_INVALIDO" : "ESTADO_NO_APROBADO")</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de error de columna derivada]"
+                  description="Salida de error de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Destino de archivo plano;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Destino de archivo plano"
+              localeId="10250"
+              name="DST_CSV_Rechazados"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Especifica si los datos sobrescriben el archivo de destino o se anexan al mismo."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Especifica el texto para escribir en el archivo de destino antes de escribir ningún dato."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="Cuando el calificador de texto está habilitado, especifica si este contendrá secuencias de escape o no en los datos escritos en el archivo de destino."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_CSV_VentasRechazadas]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_CSV_VentasRechazadas]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano]"
+                  hasSideEffects="true"
+                  name="Entrada de destino de archivo plano">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[IdVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdVenta"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[IdVenta]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[FechaVenta]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[IdCliente]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdCliente"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[IdCliente]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[Producto]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Producto"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Producto]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[Cantidad]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cantidad"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Cantidad]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[PrecioUnitario]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrecioUnitario"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[PrecioUnitario]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Estado]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].Columns[MotivoRechazo]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MotivoRechazo"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[MotivoRechazo]"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[IdVenta]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      name="IdVenta" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[FechaVenta]"
+                      codePage="65001"
+                      dataType="str"
+                      length="30"
+                      name="FechaVenta" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[IdCliente]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      name="IdCliente" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Producto]"
+                      codePage="65001"
+                      dataType="str"
+                      length="150"
+                      name="Producto" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Cantidad]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      name="Cantidad" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[PrecioUnitario]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="PrecioUnitario" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[Estado]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      name="Estado" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano].ExternalColumns[MotivoRechazo]"
+                      codePage="65001"
+                      dataType="str"
+                      length="100"
+                      name="MotivoRechazo" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
             </component>
             <component
               refId="Package\DFT_ProcesarVentas\LKP_ValidarCliente"
@@ -582,7 +1076,7 @@ where [refTable].[IdCliente] = ?</property>
               componentClassID="Microsoft.FlatFileSource"
               contactInfo="Origen de archivo plano;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
               description="Origen de archivo plano"
-              localeId="10250"
+              localeId="1033"
               name="SRC_CSV_Ventas"
               usesDispositions="true"
               version="1">
@@ -838,6 +1332,507 @@ where [refTable].[IdCliente] = ?</property>
                 </output>
               </outputs>
             </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\UNN_Rechazados"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Unión de todo;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Combina las filas de varios flujos de datos sin ordenarlos. Por ejemplo, devuelve filas a un flujo de datos después de corregir los errores. Si el orden es importante, se recomienda usar la transformación Mezclar."
+              name="UNN_Rechazados"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1]"
+                  name="Entrada de Unión de todo 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[IdVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[IdCliente]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdCliente"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdCliente]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[Producto]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Producto"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Producto]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[Cantidad]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cantidad"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Cantidad]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[PrecioUnitario]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrecioUnitario"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorCode]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorCode]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos].Columns[ErrorColumn]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorColumn]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1].Columns[MotivoRechazo]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MotivoRechazo"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de columna derivada].Columns[MotivoRechazo]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3]"
+                  hasSideEffects="true"
+                  name="Entrada de Unión de todo 3">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[IdVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[IdCliente]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdCliente"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdCliente]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[Producto]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Producto"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Producto]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[Cantidad]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cantidad"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Cantidad]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[PrecioUnitario]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrecioUnitario"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3].Columns[MotivoRechazo]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MotivoRechazo"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de columna derivada].Columns[MotivoRechazo]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4]"
+                  hasSideEffects="true"
+                  name="Entrada de Unión de todo 4">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[IdVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[FechaVenta]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="FechaVenta"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[FechaVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[IdCliente]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="IdCliente"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[IdCliente]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[Producto]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Producto"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Producto]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[Cantidad]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cantidad"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Cantidad]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[PrecioUnitario]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrecioUnitario"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[PrecioUnitario]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4].Columns[MotivoRechazo]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MotivoRechazo"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada].Columns[MotivoRechazo]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Id. de linaje de columna de salida"
+                          name="OutputColumnLineageID">#{Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 2]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Entrada de Unión de todo 2">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1]"
+                  name="Salida de Unión de todo 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdVenta]"
+                      name="IdVenta" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]"
+                      codePage="65001"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[FechaVenta]"
+                      name="FechaVenta" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[IdCliente]"
+                      name="IdCliente" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]"
+                      codePage="65001"
+                      dataType="str"
+                      length="150"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Producto]"
+                      name="Producto" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Cantidad]"
+                      name="Cantidad" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[PrecioUnitario]"
+                      name="PrecioUnitario" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]"
+                      codePage="65001"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[Estado]"
+                      name="Estado" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorCode]"
+                      name="ErrorCode" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[ErrorColumn]"
+                      name="ErrorColumn" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]"
+                      codePage="65001"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1].Columns[MotivoRechazo]"
+                      name="MotivoRechazo" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
           </components>
           <paths>
             <path
@@ -846,15 +1841,50 @@ where [refTable].[IdCliente] = ?</property>
               name="Salida de columna derivada"
               startId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada]" />
             <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada1]"
+              endId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 1]"
+              name="Salida de columna derivada"
+              startId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Outputs[Salida de columna derivada]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada2]"
+              endId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 3]"
+              name="Salida de columna derivada"
+              startId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Outputs[Salida de columna derivada]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada3]"
+              endId="Package\DFT_ProcesarVentas\UNN_Rechazados.Inputs[Entrada de Unión de todo 4]"
+              name="Salida de columna derivada"
+              startId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada]" />
+            <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
               endId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]"
               name="Salida de conversión de datos"
               startId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos]" />
             <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
+              endId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Inputs[Entrada de columna derivada]"
+              name="Salida de entradas no coincidentes de búsqueda"
+              startId="Package\DFT_ProcesarVentas\LKP_ValidarCliente.Outputs[Salida de entradas no coincidentes de búsqueda]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de error de conversión de datos]"
+              endId="Package\DFT_ProcesarVentas\DRV_RechazoConversion.Inputs[Entrada de columna derivada]"
+              name="Salida de error de conversión de datos"
+              startId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de error de conversión de datos]" />
+            <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
               endId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Inputs[Entrada de conversión de datos]"
               name="Salida de origen de archivo plano"
               startId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de Unión de todo 1]"
+              endId="Package\DFT_ProcesarVentas\DST_CSV_Rechazados.Inputs[Entrada de destino de archivo plano]"
+              name="Salida de Unión de todo 1"
+              startId="Package\DFT_ProcesarVentas\UNN_Rechazados.Outputs[Salida de Unión de todo 1]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[VentaNoValida]"
+              endId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Inputs[Entrada de columna derivada]"
+              name="VentaNoValida"
+              startId="Package\DFT_ProcesarVentas\CS_ValidarVenta.Outputs[VentaNoValida]" />
             <path
               refId="Package\DFT_ProcesarVentas.Paths[VentaValida]"
               endId="Package\DFT_ProcesarVentas\LKP_ValidarCliente.Inputs[Entrada de búsqueda]"
@@ -941,18 +1971,18 @@ where [refTable].[IdCliente] = ?</property>
     design-time-name="Package\DFT_ProcesarVentas">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="165.6,41.6"
           Id="Package\DFT_ProcesarVentas\SRC_CSV_Ventas"
-          TopLeft="291.666650730703,89.2666660459174" />
+          TopLeft="83.333328780201,79.7333327788777" />
         <NodeLayout
           Size="173.6,41.6"
           Id="Package\DFT_ProcesarVentas\CNV_TiposDatos"
-          TopLeft="293.333317306307,187.199998698235" />
+          TopLeft="84.9999953558049,177.666665431195" />
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
-          TopLeft="377.299984018505,130.866666045917">
+          TopLeft="168.966662068003,121.333332778878">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -975,10 +2005,10 @@ where [refTable].[IdCliente] = ?</property>
         <NodeLayout
           Size="162.4,41.6"
           Id="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal"
-          TopLeft="301.666650184328,282.533331368632" />
+          TopLeft="93.3333282338253,272.999998101592" />
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
-          TopLeft="381.499983745317,228.799998698235">
+          TopLeft="173.166661794815,219.266665431195">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1001,10 +2031,10 @@ where [refTable].[IdCliente] = ?</property>
         <NodeLayout
           Size="169.6,41.6"
           Id="Package\DFT_ProcesarVentas\CS_ValidarVenta"
-          TopLeft="299.999983608723,373.666664346391" />
+          TopLeft="91.666661658221,364.133331079351" />
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada]"
-          TopLeft="383.833316896525,324.133331368632">
+          TopLeft="175.499994946023,314.599998101592">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1025,12 +2055,12 @@ where [refTable].[IdCliente] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="170.4,41.6"
+          Size="168.8,41.6"
           Id="Package\DFT_ProcesarVentas\LKP_ValidarCliente"
-          TopLeft="299.999983608723,474.066663370066" />
+          TopLeft="91.6666616582212,464.533330103027" />
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[VentaValida]"
-          TopLeft="384.999983608723,415.266664346391">
+          TopLeft="176.266661658221,405.733331079351">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1050,6 +2080,234 @@ where [refTable].[IdCliente] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="-26.69654296875,20.7754877930878,53.3930859375,9.7490234375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_RechazoConversion"
+          TopLeft="334.999981696408,177.266666045917" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de error de conversión de datos]"
+          TopLeft="258.599995355805,198.266665738556">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.3999863406027,0"
+              Start="0,0"
+              End="68.8999863406027,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.8999863406027,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-51.2932490171986,5,171.486484375,10.3349609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_RechazoReglas"
+          TopLeft="310.833316350149,314.199998427033" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[VentaNoValida]"
+          TopLeft="261.266661658221,384.933331079351">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.5666546919282,-49.9333326523174"
+              Start="0,0"
+              End="42.0666546919282,-49.9333326523174">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="20.7833273459641,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20.7833273459641,0"
+                    Point2="24.7833273459641,0"
+                    Point3="24.7833273459641,-4" />
+                  <mssgle:LineSegment
+                    End="24.7833273459641,-45.9333326523174" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.7833273459641,-45.9333326523174"
+                    Point2="24.7833273459641,-49.9333326523174"
+                    Point3="28.7833273459641,-49.9333326523174" />
+                  <mssgle:LineSegment
+                    End="42.0666546919282,-49.9333326523174" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-7.9632156227859,1,65.4930859375,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_RechazoCliente"
+          TopLeft="324.166648954982,459.799997414549" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
+          TopLeft="260.466661658221,482.966663758788">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63.6999872967608,0"
+              Start="0,0"
+              End="56.1999872967608,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="56.1999872967608,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-78.7890297891196,5,213.778046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\DFT_ProcesarVentas\UNN_Rechazados"
+          TopLeft="532.499970905484,312.999998463194" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada1]"
+          TopLeft="434.999981696408,218.866666045917">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="179.899989209076,94.1333324172761"
+              Start="0,0"
+              End="179.899989209076,86.6333324172761">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.0666662086381" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.0666662086381"
+                    Point2="0,47.0666662086381"
+                    Point3="4,47.0666662086381" />
+                  <mssgle:LineSegment
+                    End="175.899989209076,47.0666662086381" />
+                  <mssgle:CubicBezierSegment
+                    Point1="175.899989209076,47.0666662086381"
+                    Point2="179.899989209076,47.0666662086381"
+                    Point3="179.899989209076,51.0666662086381" />
+                  <mssgle:LineSegment
+                    End="179.899989209076,86.6333324172761" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada2]"
+          TopLeft="414.166648954982,459.799997414549">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="200.733321950502,-105.199998951355"
+              Start="0,0"
+              End="200.733321950502,-97.6999989513555">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-48.5999994756777" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-48.5999994756777"
+                    Point2="0,-52.5999994756777"
+                    Point3="4,-52.5999994756777" />
+                  <mssgle:LineSegment
+                    End="196.733321950502,-52.5999994756777" />
+                  <mssgle:CubicBezierSegment
+                    Point1="196.733321950502,-52.5999994756777"
+                    Point2="200.733321950502,-52.5999994756777"
+                    Point3="200.733321950502,-56.5999994756777" />
+                  <mssgle:LineSegment
+                    End="200.733321950502,-97.6999989513555" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="192.8,41.6"
+          Id="Package\DFT_ProcesarVentas\DST_CSV_Rechazados"
+          TopLeft="609.999966671071,468.733330735829" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de Unión de todo 1]"
+          TopLeft="641.033304238817,354.599998463194">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.3666624322536,114.133332272635"
+              Start="0,0"
+              End="65.3666624322536,106.633332272635">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.3117944413963" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.3117944413963"
+                    Point2="0,46.3117944413963"
+                    Point3="4,46.3117944413963" />
+                  <mssgle:LineSegment
+                    End="61.3666624322536,46.3117944413963" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.3666624322536,46.3117944413963"
+                    Point2="65.3666624322536,46.3117944413963"
+                    Point3="65.3666624322536,50.3117944413963" />
+                  <mssgle:LineSegment
+                    End="65.3666624322536,106.633332272635" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada3]"
+          TopLeft="490.033316350149,334.399998445114">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42.4666545553346,0"
+              Start="0,0"
+              End="34.9666545553346,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="34.9666545553346,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
