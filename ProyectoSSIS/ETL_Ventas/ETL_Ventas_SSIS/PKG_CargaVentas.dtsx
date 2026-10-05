@@ -12,8 +12,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="PKG_CargaVentas"
   DTS:PackageType="5"
-  DTS:VersionBuild="45"
-  DTS:VersionGUID="{E876F34F-29CA-4AB2-B1BC-2F5AB9EC195A}">
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{216AB192-855C-427F-8BE8-A7EB8841A971}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -537,6 +537,90 @@
               </outputs>
             </component>
             <component
+              refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Crea nuevos valores de columna aplicando expresiones a las columnas de entrada de la transformación. Crea nuevas columnas o sobrescribe las columnas existentes. Por ejemplo, se concatenan los valores de las columnas 'nombre' y 'apellidos' para crear una columna 'nombre completo'."
+              name="DRV_EstadoSQL"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Inputs[Entrada de columna derivada]"
+                  description="Entrada en la transformación Columna derivada"
+                  name="Entrada de columna derivada">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Inputs[Entrada de columna derivada].Columns[Estado]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado"
+                      lineageId="Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de columna derivada]"
+                  description="Salida predeterminada de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  name="Salida de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de columna derivada].Columns[Estado_SQL]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Cálculo"
+                      errorRowDisposition="FailComponent"
+                      length="20"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de columna derivada].Columns[Estado_SQL]"
+                      name="Estado_SQL"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión de columna derivada"
+                          name="Expression">(DT_STR,20,1252)#{Package\DFT_ProcesarVentas\SRC_CSV_Ventas.Outputs[Salida de origen de archivo plano].Columns[Estado]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Expresión descriptiva de columna derivada"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,20,1252)Estado</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de error de columna derivada]"
+                  description="Salida de error de la transformación Columna derivada"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de columna derivada"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Inputs[Entrada de columna derivada]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de error de columna derivada].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de error de columna derivada].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\DFT_ProcesarVentas\DRV_RechazoCliente"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Columna derivada;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
@@ -929,6 +1013,207 @@
                   </externalMetadataColumns>
                 </input>
               </inputs>
+            </component>
+            <component
+              refId="Package\DFT_ProcesarVentas\DST_SQL_Venta"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Destino de OLE DB"
+              name="DST_SQL_Venta"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[dbo].[Venta]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores proporcionados para columnas de identidad se van a copiar al destino. Si es False, los valores de las columnas de identidad se generan automáticamente en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si las columnas que contienen NULL tendrán NULL insertado en el destino. Si es False, las columnas que contienen NULL tendrán sus valores predeterminados insertados en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica opciones para usar con la carga rápida. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cuándo se emiten confirmaciones durante la inserción de datos. El valor 0 especifica que se emitirá una confirmación al final de la inserción de datos. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Connections[OleDbConnection]"
+                  connectionManagerID="{60FB9490-BBB0-4FD3-8714-607CB9383DC9}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[CM_SQL_ETLVentas]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB]"
+                  errorOrTruncationOperation="Insertar"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[ImporteTotal]"
+                      cachedDataType="numeric"
+                      cachedName="ImporteTotal"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ImporteTotal]"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Outputs[Salida de columna derivada].Columns[ImporteTotal]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[IdVenta_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="IdVenta_Cnv"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[IdVenta]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdVenta_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[FechaVenta_Cnv]"
+                      cachedDataType="dbDate"
+                      cachedName="FechaVenta_Cnv"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FechaVenta]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[FechaVenta_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[IdCliente_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="IdCliente_Cnv"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[IdCliente]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[IdCliente_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[Producto_Cnv]"
+                      cachedDataType="wstr"
+                      cachedLength="150"
+                      cachedName="Producto_Cnv"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Producto]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Producto_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[Cantidad_Cnv]"
+                      cachedDataType="i4"
+                      cachedName="Cantidad_Cnv"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Cantidad]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[Cantidad_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[PrecioUnitario_Cnv]"
+                      cachedDataType="numeric"
+                      cachedName="PrecioUnitario_Cnv"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PrecioUnitario]"
+                      lineageId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos].Columns[PrecioUnitario_Cnv]" />
+                    <inputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].Columns[Estado_SQL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Estado_SQL"
+                      externalMetadataColumnId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Estado]"
+                      lineageId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de columna derivada].Columns[Estado_SQL]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[IdVenta]"
+                      dataType="i4"
+                      name="IdVenta" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FechaVenta]"
+                      dataType="dbDate"
+                      name="FechaVenta" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[IdCliente]"
+                      dataType="i4"
+                      name="IdCliente" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Producto]"
+                      dataType="wstr"
+                      length="150"
+                      name="Producto" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Cantidad]"
+                      dataType="i4"
+                      name="Cantidad" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PrecioUnitario]"
+                      dataType="numeric"
+                      name="PrecioUnitario"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ImporteTotal]"
+                      dataType="numeric"
+                      name="ImporteTotal"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Estado]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Estado" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FechaCarga]"
+                      dataType="dbTimeStamp2"
+                      name="FechaCarga" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Outputs[Salida de error de destino de OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de OLE DB"
+                  synchronousInputId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
             </component>
             <component
               refId="Package\DFT_ProcesarVentas\LKP_ValidarCliente"
@@ -1856,10 +2141,20 @@ where [refTable].[IdCliente] = ?</property>
               name="Salida de columna derivada"
               startId="Package\DFT_ProcesarVentas\DRV_RechazoReglas.Outputs[Salida de columna derivada]" />
             <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada4]"
+              endId="Package\DFT_ProcesarVentas\DST_SQL_Venta.Inputs[Entrada de destino de OLE DB]"
+              name="Salida de columna derivada"
+              startId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Outputs[Salida de columna derivada]" />
+            <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
               endId="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal.Inputs[Entrada de columna derivada]"
               name="Salida de conversión de datos"
               startId="Package\DFT_ProcesarVentas\CNV_TiposDatos.Outputs[Salida de conversión de datos]" />
+            <path
+              refId="Package\DFT_ProcesarVentas.Paths[Salida de entradas coincidentes de búsqueda]"
+              endId="Package\DFT_ProcesarVentas\DRV_EstadoSQL.Inputs[Entrada de columna derivada]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\DFT_ProcesarVentas\LKP_ValidarCliente.Outputs[Salida de entradas coincidentes de búsqueda]" />
             <path
               refId="Package\DFT_ProcesarVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
               endId="Package\DFT_ProcesarVentas\DRV_RechazoCliente.Inputs[Entrada de columna derivada]"
@@ -1973,313 +2268,267 @@ where [refTable].[IdCliente] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="169.6,41.6"
+          Id="Package\DFT_ProcesarVentas\CS_ValidarVenta"
+          TopLeft="89.999995082617,291.333331585593" />
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_RechazoConversion"
+          TopLeft="514.16663857384,143.466666280958" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal"
+          TopLeft="94.1666615216272,214.066665178074" />
+        <NodeLayout
+          Size="168.8,41.6"
+          Id="Package\DFT_ProcesarVentas\LKP_ValidarCliente"
+          TopLeft="89.9999950826172,373.53333073583" />
+        <NodeLayout
           Size="165.6,41.6"
           Id="Package\DFT_ProcesarVentas\SRC_CSV_Ventas"
           TopLeft="83.333328780201,79.7333327788777" />
         <NodeLayout
-          Size="173.6,41.6"
-          Id="Package\DFT_ProcesarVentas\CNV_TiposDatos"
-          TopLeft="84.9999953558049,177.666665431195" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
-          TopLeft="168.966662068003,121.333332778878">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,56.3333326523172"
-              Start="0,0"
-              End="0,48.8333326523172">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,48.8333326523172" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="162.4,41.6"
-          Id="Package\DFT_ProcesarVentas\DRV_CalcularImporteTotal"
-          TopLeft="93.3333282338253,272.999998101592" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
-          TopLeft="173.166661794815,219.266665431195">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,53.7333326703973"
-              Start="0,0"
-              End="0,46.2333326703973">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.2333326703973" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="169.6,41.6"
-          Id="Package\DFT_ProcesarVentas\CS_ValidarVenta"
-          TopLeft="91.666661658221,364.133331079351" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada]"
-          TopLeft="175.499994946023,314.599998101592">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,49.5333329777586"
-              Start="0,0"
-              End="0,42.0333329777586">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,42.0333329777586" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="168.8,41.6"
-          Id="Package\DFT_ProcesarVentas\LKP_ValidarCliente"
-          TopLeft="91.6666616582212,464.533330103027" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[VentaValida]"
-          TopLeft="176.266661658221,405.733331079351">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,58.7999990236757"
-              Start="0,0"
-              End="0,51.2999990236757">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,51.2999990236757" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-26.69654296875,20.7754877930878,53.3930859375,9.7490234375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="200,41.6"
-          Id="Package\DFT_ProcesarVentas\DRV_RechazoConversion"
-          TopLeft="334.999981696408,177.266666045917" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de error de conversión de datos]"
-          TopLeft="258.599995355805,198.266665738556">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="76.3999863406027,0"
-              Start="0,0"
-              End="68.8999863406027,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="68.8999863406027,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-51.2932490171986,5,171.486484375,10.3349609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="164.8,41.6"
+          Id="Package\DFT_ProcesarVentas\UNN_Rechazados"
+          TopLeft="624.999965851507,248.866665575836" />
         <NodeLayout
           Size="179.2,41.6"
           Id="Package\DFT_ProcesarVentas\DRV_RechazoReglas"
-          TopLeft="310.833316350149,314.199998427033" />
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[VentaNoValida]"
-          TopLeft="261.266661658221,384.933331079351">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="49.5666546919282,-49.9333326523174"
-              Start="0,0"
-              End="42.0666546919282,-49.9333326523174">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="20.7833273459641,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="20.7833273459641,0"
-                    Point2="24.7833273459641,0"
-                    Point3="24.7833273459641,-4" />
-                  <mssgle:LineSegment
-                    End="24.7833273459641,-45.9333326523174" />
-                  <mssgle:CubicBezierSegment
-                    Point1="24.7833273459641,-45.9333326523174"
-                    Point2="24.7833273459641,-49.9333326523174"
-                    Point3="28.7833273459641,-49.9333326523174" />
-                  <mssgle:LineSegment
-                    End="42.0666546919282,-49.9333326523174" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-7.9632156227859,1,65.4930859375,9.7490234375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="384.999978964528,245.733332236475" />
         <NodeLayout
           Size="180,41.6"
           Id="Package\DFT_ProcesarVentas\DRV_RechazoCliente"
-          TopLeft="324.166648954982,459.799997414549" />
+          TopLeft="502.499972544612,368.799998047352" />
+        <NodeLayout
+          Size="173.6,41.6"
+          Id="Package\DFT_ProcesarVentas\CNV_TiposDatos"
+          TopLeft="84.1666620680028,146.466665648156" />
+        <NodeLayout
+          Size="192.8,41.6"
+          Id="Package\DFT_ProcesarVentas\DST_CSV_Rechazados"
+          TopLeft="643.333298183151,449.66666420175" />
         <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
-          TopLeft="260.466661658221,482.966663758788">
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada1]"
+          TopLeft="614.16663857384,185.066666280958">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="63.6999872967608,0"
+              EndConnector="93.2333272776668,63.7999992948779"
               Start="0,0"
-              End="56.1999872967608,0">
+              End="93.2333272776668,56.2999992948779">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="56.1999872967608,0" />
+                    End="0,27.8999996474389" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.8999996474389"
+                    Point2="0,31.8999996474389"
+                    Point3="4,31.8999996474389" />
+                  <mssgle:LineSegment
+                    End="89.2333272776668,31.8999996474389" />
+                  <mssgle:CubicBezierSegment
+                    Point1="89.2333272776668,31.8999996474389"
+                    Point2="93.2333272776668,31.8999996474389"
+                    Point3="93.2333272776668,35.8999996474389" />
+                  <mssgle:LineSegment
+                    End="93.2333272776668,56.2999992948779" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada]"
+          TopLeft="175.083328302122,255.666665178074">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.6666664075194"
+              Start="0,0"
+              End="0,28.1666664075194">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.1666664075194" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[VentaValida]"
+          TopLeft="174.599995082617,332.933331585593">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.5999991502366"
+              Start="0,0"
+              End="0,33.0999991502366">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.0999991502366" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-78.7890297891196,5,213.778046875,12.1953125"
+              BoundingBox="-26.69654296875,11.6754878563683,53.3930859375,9.7490234375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\DFT_ProcesarVentas\UNN_Rechazados"
-          TopLeft="532.499970905484,312.999998463194" />
         <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada1]"
-          TopLeft="434.999981696408,218.866666045917">
+          Id="Package\DFT_ProcesarVentas.Paths[VentaNoValida]"
+          TopLeft="259.599995082617,312.133331585593">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="179.899989209076,94.1333324172761"
+              EndConnector="125.399983881911,-45.5999993491182"
               Start="0,0"
-              End="179.899989209076,86.6333324172761">
+              End="117.899983881911,-45.5999993491182">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,43.0666662086381" />
+                    End="58.6999919409554,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,43.0666662086381"
-                    Point2="0,47.0666662086381"
-                    Point3="4,47.0666662086381" />
+                    Point1="58.6999919409554,0"
+                    Point2="62.6999919409554,0"
+                    Point3="62.6999919409554,-4" />
                   <mssgle:LineSegment
-                    End="175.899989209076,47.0666662086381" />
+                    End="62.6999919409554,-41.5999993491182" />
                   <mssgle:CubicBezierSegment
-                    Point1="175.899989209076,47.0666662086381"
-                    Point2="179.899989209076,47.0666662086381"
-                    Point3="179.899989209076,51.0666662086381" />
+                    Point1="62.6999919409554,-41.5999993491182"
+                    Point2="62.6999919409554,-45.5999993491182"
+                    Point3="66.6999919409554,-45.5999993491182" />
                   <mssgle:LineSegment
-                    End="179.899989209076,86.6333324172761" />
+                    End="117.899983881911,-45.5999993491182" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="29.9534489722054,1,65.4930859375,9.7490234375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada2]"
-          TopLeft="414.166648954982,459.799997414549">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="200.733321950502,-105.199998951355"
-              Start="0,0"
-              End="200.733321950502,-97.6999989513555">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-48.5999994756777" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-48.5999994756777"
-                    Point2="0,-52.5999994756777"
-                    Point3="4,-52.5999994756777" />
-                  <mssgle:LineSegment
-                    End="196.733321950502,-52.5999994756777" />
-                  <mssgle:CubicBezierSegment
-                    Point1="196.733321950502,-52.5999994756777"
-                    Point2="200.733321950502,-52.5999994756777"
-                    Point3="200.733321950502,-56.5999994756777" />
-                  <mssgle:LineSegment
-                    End="200.733321950502,-97.6999989513555" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="192.8,41.6"
-          Id="Package\DFT_ProcesarVentas\DST_CSV_Rechazados"
-          TopLeft="609.999966671071,468.733330735829" />
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[Salida de Unión de todo 1]"
-          TopLeft="641.033304238817,354.599998463194">
+          TopLeft="736.633298683996,290.466665575836">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="65.3666624322536,114.133332272635"
+              EndConnector="0,159.199998625914"
               Start="0,0"
-              End="65.3666624322536,106.633332272635">
+              End="0,151.699998625914">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,42.3117944413963" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,42.3117944413963"
-                    Point2="0,46.3117944413963"
-                    Point3="4,46.3117944413963" />
+                    End="0,151.699998625914" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de origen de archivo plano]"
+          TopLeft="168.549995424102,121.333332778878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.1333328692782"
+              Start="0,0"
+              End="0,17.6333328692782">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="61.3666624322536,46.3117944413963" />
-                  <mssgle:CubicBezierSegment
-                    Point1="61.3666624322536,46.3117944413963"
-                    Point2="65.3666624322536,46.3117944413963"
-                    Point3="65.3666624322536,50.3117944413963" />
+                    End="0,17.6333328692782" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de error de conversión de datos]"
+          TopLeft="257.766662068003,165.766665964557">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="256.399976505837,0"
+              Start="0,0"
+              End="248.899976505837,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="65.3666624322536,106.633332272635" />
+                    End="248.899976505837,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="38.7067460654186,5,171.486484375,10.3349609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
+          TopLeft="258.799995082617,391.966664391591">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="243.699977461995,0"
+              Start="0,0"
+              End="236.199977461995,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="236.199977461995,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.2109652934974,5,213.778046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de conversión de datos]"
+          TopLeft="173.166661794815,188.066665648156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.9999995299178"
+              Start="0,0"
+              End="0,18.4999995299178">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.4999995299178" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2290,18 +2539,106 @@ where [refTable].[IdCliente] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada3]"
-          TopLeft="490.033316350149,334.399998445114">
+          TopLeft="564.199978964528,268.099998906155">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="42.4666545553346,0"
+              EndConnector="60.799986886979,0"
               Start="0,0"
-              End="34.9666545553346,0">
+              End="53.299986886979,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="34.9666545553346,0" />
+                    End="53.299986886979,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada2]"
+          TopLeft="592.499972544612,368.799998047352">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="88.7666599735614,-78.3333324715156"
+              Start="0,0"
+              End="88.7666599735614,-70.8333324715156">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-42.5480764109583" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-42.5480764109583"
+                    Point2="0,-46.5480764109583"
+                    Point3="4,-46.5480764109583" />
+                  <mssgle:LineSegment
+                    End="84.7666599735614,-46.5480764109583" />
+                  <mssgle:CubicBezierSegment
+                    Point1="84.7666599735614,-46.5480764109583"
+                    Point2="88.7666599735614,-46.5480764109583"
+                    Point3="88.7666599735614,-50.5480764109583" />
+                  <mssgle:LineSegment
+                    End="88.7666599735614,-70.8333324715156" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\DFT_ProcesarVentas\DRV_EstadoSQL"
+          TopLeft="89.999995082617,474.933330030706" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de entradas coincidentes de búsqueda]"
+          TopLeft="172.799995082617,415.13333073583">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.7999992948764"
+              Start="0,0"
+              End="0,52.2999992948764">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.2999992948764" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,20.0523433974382,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="168.8,41.6"
+          Id="Package\DFT_ProcesarVentas\DST_SQL_Venta"
+          TopLeft="91.666661658221,545.999996926387" />
+        <EdgeLayout
+          Id="Package\DFT_ProcesarVentas.Paths[Salida de columna derivada4]"
+          TopLeft="173.633328370419,516.533330030706">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.4666668956813"
+              Start="0,0"
+              End="0,21.9666668956813">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.9666668956813" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2319,7 +2656,7 @@ where [refTable].[IdCliente] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2329,10 +2666,23 @@ where [refTable].[IdCliente] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_ProcesarVentas\DST_SQL_Venta">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
